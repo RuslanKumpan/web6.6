@@ -1,51 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+    <head>
+    
+        <title>Задание 6</title>
+    </head>
+    <body>
+        <h1>Рынок</h1>
+        <h2>Оформление заказа</h2>
+        <fildset>
+ Введите количество кг</br>
+            <input id="quantity"></br>
+ Выберите вид продукта</br>
+            <select name="type">
+                <option value="1">Яблоки</option>
+                <option value="2">Бананы</option>
+                <option value="3">Сливы</option>
+            </select></br>
+            <div id="options">
+                <label><input type="radio" name="options" value="gazprom">Зеленные</label>
+                <label><input type="radio" name="options" value="lykoil">Красные</label>
+                <label><input type="radio" name="options" value="baztopoperator">Желтые</label>
+            </div>
+            <div id="properties">
+                <label><input type="checkbox" name="fluffy">Желтые</label>
+                <label><input type="checkbox" name="sheared">Зеленые</label>
+            </div>
+        </fildset>
+        <div id="pay"></div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-
-    <form>
-        <input type="text" name="cost" placeholder="Введите стоимость">
-        <input type="text" name="kol" placeholder="Введите количество">
-        <button id="button1" onclick="return calc();">Расчитать стоимость</button>
-    </form>
-    <div id="result"></div>
-
-
-    <form>
-        <select name="form">
-            <option value="0">Выберите форму фигуры</option>
-            <option value="1">Квадрат</option>
-            <option value="2">Круг</option>
-            <option value="3">Эллипс</option>
-        </select>
-        <div id="radios">
-            <div class="color">Выберите цвет: </div>
-            <label>
-                <input type="radio" name="color" value="0">Зеленый
-            </label>
-            <label>
-                <input type="radio" name="color" value="1">Синий   
-            </label>
-            <label>
-                <input type="radio" name="color" value="2">Красный
-            </label>
-        </div>
-        <div id="checkboxes">
-            <div class="border">Выберите border:</div>
-            <label><input type="checkbox" value="border1">Черный</label>
-            <label><input type="checkbox" value="border2">Бесцветный</label>
-            <label><input type="checkbox" value="border3">Отсутствует</label>
-        </div>
-        <div id="sum"></div>
-    </form>
-
-    <script src="main.js" defer></script>
-</body>
-
+        <script src="main.js" defer></script>
+    </body>
 </html>
