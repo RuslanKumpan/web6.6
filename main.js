@@ -1,107 +1,110 @@
-var name = prompt('Введите ваше имя', '');
-
-function calc() {
-    let cost = document.getElementsByName("cost");
-    let kol = document.getElementsByName("kol");
-    let result = document.getElementById("result");
-    let re = /\D\./;
-    if ((cost[0].value.match(re) || kol[0].value.match(re)) === null)
-        result.innerHTML = (name + "," + "стоимость вашего заказа: " + parseFloat(cost[0].value, 10) * parseInt(kol[0].value, 10));
-    else result.innerHTML = "Ошибка! Неверный формат чисел";
-    return false;
-}
-
-function checkRadio() {
-    let radioe = document.getElementsByName("color");
-    radioe.forEach(function(radio) {
-        radio.checked = false;
+function price()
+{
+    var a = Number(document.getElementById("quantity").value);
+    let b = document.getElementsByName("type");
+    let select = b[0];
+    let c = 0;
+    let d = prices();
+    let e = parseInt(select.value) - 1;
+    if (e >= 0)
+    {
+        c = d.types[e];
+    }
+    let f = document.getElementById("options");
+    f.style.display = (select.value == "2" ? "block" : "none");
+    let g = document.getElementsByName("options");
+    g.forEach(function(radio) 
+    {
+        if (radio.checked) 
+        {
+            let h = d.options[radio.value];
+            if (h !== undefined && select.value == "2") 
+            {
+                c += h;
+            }
+        }
     });
-}
-
-function checkCheckbox(val) {
-    let checkboxer = document.querySelectorAll("#checkboxes input");
-    checkboxer.forEach(function(checkbox) {
-        if (checkbox.value != val)
-            checkbox.checked = false;
+    let i = document.getElementById("properties");
+    i.style.display = (select.value == "3" ? "block" : "none");
+    let j = document.querySelectorAll("#properties input");
+    j.forEach(function(checkbox)
+    {
+        if (checkbox.checked) 
+        {
+            let k = d.properties[checkbox.name];
+            if (k !== undefined && select.value == "3") 
+            {
+                c += k;
+            }
+        }
     });
+    if (!(/^(0|[1-9][0-9]*)$/).test(a) || document.getElementById("quantity").value == "")
+    {
+        alert("Вы ввели неверные данные");
+    }
+    else
+    {
+        c *= a;
+        document.getElementById("pay").innerHTML = "Стоимость равна: " + c;
+    }
 }
-
-window.addEventListener('DOMContentLoaded', function(event) {
-
-    let cost = {
-        form: [100, 200, 300],
-        color: [10, 20, 30],
-        border: {
-            border1: 1,
-            border2: 2,
-            border3: 3,
+function prices()
+{
+    return {
+        types: [8, 88, 888],
+        options:
+        {
+            gray: 5,
+            brown: 10,
+            crimson: 15,
+        },
+        properties:
+        {
+            fluffy: 1,
+            sheared: 2,
         }
     };
-    let form = document.getElementsByName("form");
-    let radios = document.getElementById("radios");
-    let checkbox = document.getElementById("checkboxes");
-    let sum = document.getElementById("sum");
-    let result = 0;
-    var lastcostform = 0;
-    radios.style.display = "none";
-    checkbox.style.display = "none";
-    form[0].addEventListener("change", function(event) {
-        let select = event.target;
-        result -= lastcostform;
-        result += cost.form[select.value - 1];
-        result -= lastcostcolor;
-        lastcostcolor = 0;
-        result -= lastcostborder;
-        lastcostborder = 0;
-        lastcostform = cost.form[select.value - 1];
-        sum.innerHTML = (name + ", сумма к оплате: " + result);
-        if (select.value == "2") {
-            radios.style.display = "block";
-            checkbox.style.display = "none";
-            checkRadio();
-        } else if (select.value == "3") {
-            checkbox.style.display = "block";
-            radios.style.display = "none";
-            checkCheckbox(null);
-        }
+}
+document.addEventListener('DOMContentLoaded', function (event) 
+{
+    let f = document.getElementById("options");
+    f.style.display = "none";
+    let a = document.getElementById("quantity");
+    a.addEventListener("change", function(event)
+    {
+        let t = event.target;
+        console.log(t.value);
+        price();
     });
-    var lastcostcolor = 0;
-    let radioe = document.getElementsByName("color");
-    radioe.forEach(function(radio) {
-        radio.addEventListener("change", function(event) {
-            result -= lastcostborder;
-            lastcostborder = 0;
-            sum.innerHTML = (name + ", сумма к оплате: " + result);
+    let b = document.getElementsByName("type");
+    let select = b[0];
+    select.addEventListener("change", function(event) 
+    {
+        let target = event.target;
+        console.log(target.value);
+        price();
+    });
+    let radios = document.getElementsByName("options");
+    radios.forEach(function(radio) 
+    {
+        radio.addEventListener("change", function(event) 
+        {
             let r = event.target;
-            if (radio.checked) {
-                let optionPrice = cost.color[radio.value];
-                if (optionPrice !== undefined) {
-                    result -= lastcostcolor;
-                    result += optionPrice;
-                    lastcostcolor = optionPrice;
-                }
-                sum.innerHTML = (name + ", сумма к оплате: " + result);
-            }
+            console.log(r.value);
+            price();    
         });
     });
-    var lastcostborder = 0;
-    let checkboxer = document.querySelectorAll("#checkboxes input");
-    checkboxer.forEach(function(checkbox) {
-        checkbox.addEventListener("change", function(event) {
-            result -= lastcostcolor;
-            lastcostcolor = 0;
-            sum.innerHTML = (name + ", сумма к оплате: " + result);
+    let p = document.getElementById("properties");
+    p.style.display = "none";
+    let checkboxes = document.querySelectorAll("#properties input");
+    checkboxes.forEach(function(checkbox) 
+    {
+        checkbox.addEventListener("change", function(event) 
+        {
             let c = event.target;
-            checkCheckbox(c.value);
-            if (checkbox.checked) {
-                let price = cost.border[c.value];
-                if (price !== undefined) {
-                    result -= lastcostborder;
-                    result += price;
-                    lastcostborder = price;
-                }
-                sum.innerHTML = (name + ", сумма к оплате: " + result);
-            }
+            console.log(c.name);
+            console.log(c.value);
+            price();
         });
     });
 });
